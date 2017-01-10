@@ -1,0 +1,128 @@
+# packages in environment at /home/mbp14mtp/.conda/envs/living_maps:
+#
+_nb_ext_conf              0.3.0                    py35_0  
+affine                    2.0.0.post1              py35_0    conda-forge
+anaconda-client           1.6.0                    py35_0  
+boto3                     1.4.2                    py35_0    conda-forge
+botocore                  1.4.81                   py35_0    conda-forge
+click                     6.6                      py35_0    conda-forge
+click-plugins             1.0.3                    py35_0    conda-forge
+cligj                     0.4.0                    py35_0    conda-forge
+clyent                    1.2.2                    py35_0  
+curl                      7.49.1                        2    conda-forge
+cycler                    0.10.0                   py35_0  
+dask                      0.13.0                    <pip>
+dbus                      1.10.10                       0  
+decorator                 4.0.10                   py35_1  
+entrypoints               0.2.2                    py35_0  
+expat                     2.1.0                         0    bioconda
+fiona                     1.7.1               np111py35_1    conda-forge
+fontconfig                2.12.1                        0  
+freetype                  2.5.5                         1  
+freexl                    1.0.2                         1    conda-forge
+gdal                      2.1.2               np111py35_5    conda-forge
+geos                      3.5.1                         1    conda-forge
+giflib                    5.1.4                         0    conda-forge
+glib                      2.50.2                        0  
+gst-plugins-base          1.8.0                         0  
+gstreamer                 1.8.0                         0  
+hdf4                      4.2.12                        0    conda-forge
+hdf5                      1.8.17                        8    conda-forge
+icu                       56.1                          4    conda-forge
+ipykernel                 4.5.2                    py35_0  
+ipython                   5.1.0                    py35_0  
+ipython_genutils          0.1.0                    py35_0  
+ipywidgets                5.2.2                    py35_0  
+jbig                      2.1                           0  
+jinja2                    2.8                      py35_1  
+jmespath                  0.9.0                    py35_0    conda-forge
+jpeg                      9b                            0    conda-forge
+jq                        1.5                           0    bioconda
+json-c                    0.12                          0    conda-forge
+jsonschema                2.5.1                    py35_0  
+jupyter                   1.0.0                    py35_3  
+jupyter_client            4.4.0                    py35_0  
+jupyter_console           5.0.0                    py35_0  
+jupyter_core              4.2.1                    py35_0  
+kealib                    1.4.6                         3    conda-forge
+libdap4                   3.18.2                        0    conda-forge
+libffi                    3.2.1                         1  
+libgcc                    5.2.0                         0  
+libgfortran               3.0.0                         1  
+libiconv                  1.14                          0  
+libnetcdf                 4.4.1.1                       2    conda-forge
+libpng                    1.6.26                        0    conda-forge
+libpq                     9.5.4                         3    conda-forge
+libsodium                 1.0.10                        0  
+libspatialite             4.3.0a                       13    conda-forge
+libtiff                   4.0.6                         7    conda-forge
+libxcb                    1.12                          1  
+libxml2                   2.9.3                         0    bioconda
+markupsafe                0.23                     py35_2  
+matplotlib                1.5.3               np111py35_5    conda-forge
+mistune                   0.7.3                    py35_0  
+mkl                       11.3.3                        0  
+munch                     2.0.4                    py35_0    conda-forge
+nb_anacondacloud          1.2.0                    py35_0  
+nb_conda                  2.0.0                    py35_0  
+nb_conda_kernels          2.0.0                    py35_0  
+nbconvert                 4.2.0                    py35_0  
+nbformat                  4.2.0                    py35_0  
+nbpresent                 3.0.2                    py35_0  
+networkx                  1.11                     py35_0  
+notebook                  4.3.0                    py35_0  
+numpy                     1.11.2                   py35_0  
+openjpeg                  2.1.2                         1    conda-forge
+openssl                   1.0.2j                        0  
+pandas                    0.19.2              np111py35_0  
+path.py                   9.0.1                    py35_0  
+pcre                      8.39                          1  
+pexpect                   4.0.1                    py35_0  
+pickleshare               0.7.4                    py35_0  
+pillow                    3.2.0                    py35_1    conda-forge
+pip                       9.0.1                    py35_1  
+proj4                     4.9.3                         2    conda-forge
+prompt_toolkit            1.0.9                    py35_0  
+ptyprocess                0.5.1                    py35_0  
+pygments                  2.1.3                    py35_0  
+pyparsing                 2.1.4                    py35_0  
+pyproj                    1.9.5.1                  py35_0    conda-forge
+pyqt                      4.11.4                   py35_2    conda-forge
+python                    3.5.2                         0  
+python-dateutil           2.3                      py35_0    bioconda
+pytz                      2016.10                  py35_0  
+PyWavelets                0.5.1                     <pip>
+pyyaml                    3.12                     py35_0  
+pyzmq                     16.0.2                   py35_0  
+qt                        4.8.7                         6    conda-forge
+qtconsole                 4.2.1                    py35_0    conda-forge
+rasterio                  1.0a5               np111py35_0    conda-forge
+rasterstats               0.11                     py35_0    conda-forge
+readline                  6.2                           2  
+requests                  2.12.4                   py35_0  
+s3transfer                0.1.9                    py35_0    conda-forge
+scikit-image              0.13.dev0                 <pip>
+scikit-learn              0.18.1              np111py35_0  
+scipy                     0.18.1              np111py35_0  
+setuptools                27.2.0                   py35_0  
+shapely                   1.5.17              np111py35_2    conda-forge
+simplegeneric             0.8.1                    py35_1  
+simplejson                3.8.1                    py35_0    bioconda
+sip                       4.18                     py35_0  
+six                       1.10.0                   py35_0  
+snuggs                    1.4.0                    py35_0    conda-forge
+sqlite                    3.13.0                        0  
+terminado                 0.6                      py35_0  
+tk                        8.5.18                        0  
+toolz                     0.8.2                     <pip>
+tornado                   4.4.2                    py35_0  
+traitlets                 4.3.1                    py35_0  
+util-linux                2.21                          0  
+wcwidth                   0.1.7                    py35_0  
+wheel                     0.29.0                   py35_0  
+widgetsnbextension        1.2.6                    py35_0  
+xerces-c                  3.1.4                         0  
+xz                        5.2.2                         1  
+yaml                      0.1.6                         0  
+zeromq                    4.1.5                         0  
+zlib                      1.2.8                         3  
