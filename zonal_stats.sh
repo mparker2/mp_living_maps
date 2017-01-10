@@ -21,6 +21,6 @@ for B in `seq 1 "${#BANDSARR[@]}"`; do
   echo "processing band $BANDNAME"
   fio cat $SHAPEFILE | rio zonalstats \
     -r $RASTER --band $B \
-    --stats "min max mean std count" | \
-  jq -r '.features[] | .properties | [.FID, ._max, ._min, ._mean, ._std, ._count] | @tsv' > $TSV
+    --stats "min max mean std" | \
+  jq -r '.features[] | .properties | [.FID, ._max, ._min, ._mean, ._std] | @tsv' > $TSV
 done
