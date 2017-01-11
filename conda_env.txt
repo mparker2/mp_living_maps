@@ -54,6 +54,7 @@ libnetcdf                 4.4.1.1                       2    conda-forge
 libpng                    1.6.26                        0    conda-forge
 libpq                     9.5.4                         3    conda-forge
 libsodium                 1.0.10                        0  
+libspatialindex           1.8.5                         1    conda-forge
 libspatialite             4.3.0a                       13    conda-forge
 libtiff                   4.0.6                         7    conda-forge
 libxcb                    1.12                          1  
@@ -100,6 +101,7 @@ rasterio                  1.0a5               np111py35_0    conda-forge
 rasterstats               0.11                     py35_0    conda-forge
 readline                  6.2                           2  
 requests                  2.12.4                   py35_0  
+rtree                     0.8.3                    py35_0    conda-forge
 s3transfer                0.1.9                    py35_0    conda-forge
 scikit-image              0.13.dev0                 <pip>
 scikit-learn              0.18.1              np111py35_0  
