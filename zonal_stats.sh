@@ -11,16 +11,15 @@ source activate living_maps
 SHAPEFILE=$1
 RASTER=$2
 echo "processing $RASTER"
-BANDS=`rio info $RASTER | jq -r '.["descriptions"] | join(",")'`
-echo "contains bands: $BANDS"
-IFS=',' read -r -a BANDSARR <<< "$BANDS"
+BANDS=`rio info $RASTER --count`
+echo "contains $BANDS bands"
 
-for B in `seq 1 "${#BANDSARR[@]}"`; do
-  BANDNAME="${BANDSARR[$B-1]}"
-  TSV="${RASTER%.*}_${BANDNAME}_zonal_stats.tsv"
-  echo "processing band $BANDNAME"
+for B in `seq 1 "${BANDS}"`; do
+  TSV="${RASTER%.*}_${B}_zonal_stats.tsv"
+  echo "processing band $B"
   fio cat $SHAPEFILE | rio zonalstats \
     -r $RASTER --band $B \
+    --nodata=0 \
     --stats "min max mean std" | \
-  jq -r '.features[] | .properties | [.FID, ._max, ._min, ._mean, ._std] | @tsv' > $TSV
+  jq -r '.features[] | [.id, .properties._max, .properties._min, .properties._mean, .properties._std] | @tsv' > $TSV
 done
