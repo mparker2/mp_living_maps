@@ -14,11 +14,9 @@ field.
 Author: Matthew Parker
 '''
 import argparse
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from itertools import chain
 import numpy as np
-import scipy.stats
-import pandas as pd
 import fiona
 from shapely.geometry import shape
 import rtree
@@ -88,14 +86,15 @@ if __name__ == '__main__':
     segs, mapping, crs, seg_schema, point_schema = get_segment_containing_points(args.segments,
                                                                                  args.points,
                                                                                  args.property)
-    # do not overwrite properties in seg_schema:
+    # do not overwrite properties with the same names in seg_schema:
     for k in seg_schema['properties']:
-        _ = point_schema.pop(k, None)
-    seg_schema['properties'] = OrderedDict(chain(seg_schema.items(), point_schema.items()))
+        _ = point_schema['properties'].pop(k, None)
+    seg_schema['properties'] = OrderedDict(chain(seg_schema['properties'].items(),
+                                                 point_schema['properties'].items()))
     
-    with fiona.open(args.output, 'w', driver='ESRI Shapefile', crs=crs, schema=schema) as shpfile:
+    with fiona.open(args.output, 'w', driver='ESRI Shapefile', crs=crs, schema=seg_schema) as shpfile:
         for seg_id, point_ids in mapping.items():
             seg = segs[seg_id]
-            for k in point_schema:
+            for k in point_schema['properties']:
                 seg['properties'][k] = point_ids[0][1][k]
             shpfile.write(seg)
