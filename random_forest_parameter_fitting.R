@@ -1,9 +1,76 @@
+## Helper functions
+
+randomSubset <- function(df, frac.training) {
+  frac <- floor((nrow(df) * frac.training))
+  subset <- sample(nrow(df), size=frac)
+  return (subset)
+}
+
+# Produces user / producer accuracy
+# depending on whether rowSums or colSums is passed
+userProducerAccuracy <- function(i, confusion.table, f=rowSums) {
+  tots <- f(confusion.table)
+  # replace NaNs with 0 if there is no data for the row/col
+  if (tots[i] == 0) {
+    return(0.0)
+  }
+  else {
+    return (confusion.table[i,i]/tots[i] * 100)
+  }
+}
+
+# produce confusion matrix and user / produce accuracies
+confusionMatrix <- function(user, producer) {
+  user <- as.factor(user)
+  producer <- as.factor(producer)
+  # if user and producer are different lengths, something is wrong!
+  stopifnot(length(user) == length(producer))
+  
+  n <- length(levels(user))
+  confusion.table <- table(producer, user)
+  
+  range <- as.matrix(1:n)
+  # total accuracy is the sum of the diagonal divided by the sum of the whole
+  total.accuracy <- sum(diag(confusion.table)) / sum(confusion.table) * 100
+  user.accuracy <- apply(range, MARGIN=1, FUN=userProducerAccuracy,
+                         confusion.table=confusion.table, f=colSums)
+  producer.accuracy <- apply(range, MARGIN=1, FUN=userProducerAccuracy,
+                             confusion.table=confusion.table, f=rowSums)
+  names(user.accuracy) <- colnames(confusion.table)
+  names(producer.accuracy) <- rownames(confusion.table)
+  
+  return (list(table=confusion.table,
+               user.accuracy=user.accuracy,
+               producer.accuracy=producer.accuracy,
+               total.accuracy=total.accuracy))
+}
+
+getLastStringElement <- function(col, splitchar='_') {
+  col <- as.character(col)
+  split <- strsplit(col, split=splitchar)
+  string.elements <- character(length(col))
+  for (i in 1:length(col)) {
+    string.elements[i] <- split[[i]][length(split[[i]])]
+  }
+  return (string.elements)
+}
+
+
+# convert matrix of probs into factor of highest scoring column for each row
+classFromProbs <- function(df) {
+  columns <- colnames(df)
+  idxmax <- apply(df, MARGIN=1, FUN=which.max)
+  return (columns[idxmax])
+}
+
 # do not read stringsAsFactors yet as subsetting and removing all instances of
 # a level from the data.frame will cause randomForest to raise error.
 zonal.stats <- read.table('D:/Living Maps/Zonal_stats/zonal_stats_merged.tsv',
                           sep='\t', header=TRUE, stringsAsFactors=FALSE)
 # add perimeter / area variable
 zonal.stats['perimeter_area_ratio'] <- zonal.stats$perimeter / zonal.stats$area
+
+
 
 # remove low confidence training points - try conf <= 2 first
 zonal.stats <- zonal.stats[zonal.stats$confidence <= 2,]
@@ -45,12 +112,26 @@ fit.rf <- randomForest(broadclass ~ .,
 # of different variables
 library(gbm)
 
+frac <- randomSubset(zonal.stats, 0.8)
+zs.train <- zonal.stats[frac,]
+zs.test <- zonal.stats[-frac,]
+
 fit.gbm <- gbm(broadclass ~ .,
-               data=zonal.stats[,c(1, 4:ncol(zonal.stats))],
-               distribution='gaussian',
-               n.trees=10000,
+               data=zs.train[,c(1, 4:ncol(zonal.stats))],
+               distribution='multinomial',
+               n.trees=1000,
                shrinkage=0.01,
-               interaction.depth=4)
+               interaction.depth=4,
+               cv.folds=2)
+
+ntrees <- gbm.perf(fit.gbm)
+predicted.gbm <- predict(fit.gbm,
+                         newdata=zs.test[,c(1, 4:ncol(zonal.stats))],
+                         type='response',
+                         n.trees=ntrees)
+predicted.gbm.classes <- classFromProbs(predicted.gbm)
+predicted.gbm.classes <- factor(predicted.gbm.classes, levels=levels(zs.test$broadclass))
+confusionMatrix(zs.test$broadclass, predicted.gbm.classes)
 
 # look at the most important variables:
 summary(fit.gbm)
@@ -76,16 +157,6 @@ plotviolin('S2_summer_SWIR2_mean')
 # which types of features are the best
 #i.e. do max, min and std add anything to the model
 fit.gbm.summary <- summary(fit.gbm)
-
-getLastStringElement <- function(col, splitchar='_') {
-  col <- as.character(col)
-  split <- strsplit(col, split=splitchar)
-  string.elements <- character(length(col))
-  for (i in 1:length(col)) {
-    string.elements[i] <- split[[i]][length(split[[i]])]
-  }
-  return (string.elements)
-}
 
 fit.gbm.summary$feature_type <- getLastStringElement(fit.gbm.summary$var)
 ggplot(fit.gbm.summary, aes(feature_type, rel.inf)) + geom_point()
