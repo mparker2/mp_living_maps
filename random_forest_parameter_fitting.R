@@ -70,6 +70,11 @@ zonal.stats <- read.table('D:/Living Maps/Zonal_stats/zonal_stats_merged.tsv',
 # add perimeter / area variable
 zonal.stats['perimeter_area_ratio'] <- zonal.stats$perimeter / zonal.stats$area
 
+#ndvi summer variable
+zonal.stats['summer_ndvi'] <- (zonal.stats$S2_summer_NIR_mean - zonal.stats$S2_summer_Red_mean) / (
+                               zonal.stats$S2_summer_NIR_mean + zonal.stats$S2_summer_Red_mean)
+zonal.stats['winter_ndvi'] <- (zonal.stats$S2_winter_NIR_mean - zonal.stats$S2_winter_Red_mean) / (
+                               zonal.stats$S2_winter_NIR_mean + zonal.stats$S2_winter_Red_mean)
 
 
 # remove low confidence training points - try conf <= 2 first
@@ -134,7 +139,7 @@ predicted.gbm.classes <- factor(predicted.gbm.classes, levels=levels(zs.test$bro
 confusionMatrix(zs.test$broadclass, predicted.gbm.classes)
 
 # look at the most important variables:
-summary(fit.gbm)
+fit.gbm.summary <- summary(fit.gbm)
 # S2_summer RedEdge5_mean and SWIR2_mean are most important by a long way
 # maximum slope and minimum height are also important, plus winter SAR data.
 
