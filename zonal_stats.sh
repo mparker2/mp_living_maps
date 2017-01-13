@@ -1,6 +1,6 @@
 #!/bin/bash
-#$ -l rmem=5G
-#$ -l mem=5G
+#$ -l rmem=15G
+#$ -l mem=15G
 #$ -j y
 #$ -N zonal_stats
 set -eo pipefail
