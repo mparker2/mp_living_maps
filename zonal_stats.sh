@@ -3,7 +3,7 @@
 #$ -l mem=1G
 #$ -j y
 #$ -N zonal_stats
-set -eo pipefail
+set -euo pipefail
 
 module load apps/python/conda
 source activate living_maps
@@ -20,6 +20,7 @@ for B in `seq 1 "${BANDS}"`; do
 #!/bin/bash
 #$ -l mem=5G
 #$ -l rmem=5G
+set -euo pipefail
 fio cat $SHAPEFILE | rio zonalstats \
   -r $RASTER --band $B \
   --nodata=0 \
